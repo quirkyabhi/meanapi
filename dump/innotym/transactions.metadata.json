@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"innotym.transactions"}],"uuid":"5a5b54a2f36b43fe8a7d7386b03c9eb7"}
