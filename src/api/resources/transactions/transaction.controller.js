@@ -24,4 +24,23 @@ export default {
         }
   
     },
+    findMyTransaction(req, res,next){
+        let {id} = req.params;
+        const {page =1, perPage=10}= req.query;
+        const options={
+            page: parseInt(page,10),
+            limit:parseInt(perPage,10),
+            populate:'userId refId'
+        }
+
+        // Transaction.find({'userId':id}).then(
+        //     data => res.json(data)
+        // )
+        Transaction.paginate({'userId':id},options).then(
+            data => res.json(data)
+        )
+        .catch(
+            err => res.status(500).json(err)
+        )
+    }
 }

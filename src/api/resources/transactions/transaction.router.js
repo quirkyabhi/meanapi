@@ -6,3 +6,5 @@ transactionRouter.route('/').get(transactionController.findAll)
 transactionRouter.route('/')
 .post(transactionController.create)
 .get(transactionController.findAll)
+
+transactionRouter.route('/myTransactions/:id').get(transactionController.findMyTransaction)

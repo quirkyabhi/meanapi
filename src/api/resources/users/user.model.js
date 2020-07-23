@@ -6,7 +6,7 @@ const empSchema= new schema(
         name: { type:String, required: true},
         email: { type:String, required: true},
         password: { type:String, required: true},
-        amount: { type:String, required: true},
+        amount: { type:Number, required: true},
 
         // salary: { type:Number, required: true},
         role:{ type:String}

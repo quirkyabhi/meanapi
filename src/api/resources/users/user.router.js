@@ -11,7 +11,7 @@ userRouter.route('/')
 
 userRouter.route('/:id')
 .get(userController.findOne)
-// .delete(useruserController.delete)
+.delete(userController.delete)
 .put(userController.update)
 
 // router.get('/users',userController.findAll)

@@ -1,6 +1,7 @@
 import User from './user.model'
 import userService from './user.service';
 import { response } from 'express';
+import Transaction from '../transactions/transaction.model'
 export default{
     findAll(req,res){
         // res.json({msg:"find all users"});
@@ -26,23 +27,23 @@ export default{
             err => res.status(500).json(err)
         )
     },
-    findOne(req,res){
-        const id = req.params.id
-        User.findByIdAndRemove(id).then(
-            employee =>{
-                if(!employee){
-                    return res.status(400).json(
-                        { err:"employee not found" }
-                    )
-                }
-                else{
-                    return res.json(employee)
-                }
-            }
-        ).catch(
-            err => res.status(500).json(err)
-        )
-    },
+    // delete(req,res){
+    //     const id = req.params.id
+    //     User.findByIdAndRemove(id).then(
+    //         employee =>{
+    //             if(!employee){
+    //                 return res.status(400).json(
+    //                     { err:"employee not found" }
+    //                 )
+    //             }
+    //             else{
+    //                 return res.json(employee)
+    //             }
+    //         }
+    //     ).catch(
+    //         err => res.status(500).json(err)
+    //     )
+    // },
     update(req,res){
         const id = req.params.id
         User.findByIdAndUpdate({_id:id},{$set:req.body},{new: true}).then(
@@ -124,6 +125,66 @@ export default{
             console.log(error)
         }
 
-    }
+    },
+    // delete(req, res){
+    //     const id= req.params.id
+    //     Transaction.deleteMany({'refId':id}, function (error, result){
+    //         if(error){
+    //             console.log(error)
+    //             return;
+    //         }else{
+    //             Transaction.deleteMany({'userId':id}, function (error, result) {
+    //                 if (error) {
+    //                     console.log(error);
+    //                     return;
+    //                 } else {
+    //                     console.log("all transactions deleted successfully")
+    //                 }
+    //                     })
+    //         }
+    //     })
+    //     User.findByIdAndRemove({'_id':id}).then(
+    //                 data =>{
+    //                     if(!data){
+    //                         return res.status(400).json(
+    //                             { err:"user not found" }
+    //                         )
+    //                     }
+    //                     else{
+    //                         return res.json(data)
+    //                     }
+    //                 }
+    //             ).catch(
+    //                 err => res.status(500).json(err)
+    //             )
+    // }
+    delete(req,res){ const id = req.params.id 
+        Transaction.deleteMany({'refId':id},function(error,result){ 
+            if(error){ 
+                console.log(error); 
+                return; 
+            } 
+            else{ 
+                Transaction.deleteMany({'userId':id},function(error,result){
+                    if(error){ 
+                        console.log(error); 
+                        return; 
+                    } else{ 
+                        console.log("all transaction deleted successfully"); 
+                    } 
+                }) 
+            } 
+        }
+        ) 
+        User.findByIdAndRemove({'_id':id})
+        .then(data =>{ 
+            if(!data){ 
+                return res.status(400).json({err:"user not found"}); 
+            } else{ 
+                return res.json(data); 
+            } 
+        }) 
+    } 
+
 
 };

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import User from '../users/user.model'
+import mongoosePaginate from 'mongoose-paginate'
 const Schema = mongoose.Schema;
 const transactionSchema= new Schema({
     userId: { 
@@ -8,7 +9,7 @@ const transactionSchema= new Schema({
         required: true 
     },
     refId:{
-        red:'User',
+        ref:'User',
         type:Schema.Types.ObjectId,
         required: true
     },
@@ -29,4 +30,6 @@ const transactionSchema= new Schema({
         required: true
     }
 },{collection: 'transactions'});
+
+transactionSchema.plugin(mongoosePaginate)
 export default new mongoose.model('Transaction',transactionSchema);
